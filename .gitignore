@@ -1,0 +1,16 @@
+# IntelliJ / JetBrains
+.idea/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node.js / TypeScript
+node_modules/
+dist/
+
+# Maven / Java
+target/
+*.class
+*.log
