@@ -16,8 +16,8 @@ _03Typescript_Playwright/dist/
 # Java / Maven
 _01Java_Selenium/target/
 _01Java_Selenium/.idea/
-_04Java_Cucumber/target/
-_04Java_Cucumber/.idea/
+_02Java_Cucumber/target/
+_02Java_Cucumber/.idea/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
