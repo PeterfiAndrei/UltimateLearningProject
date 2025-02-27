@@ -1,7 +1,7 @@
 import copy
 
-#######String
-####cum se fac arrayurile
+# ######String
+# ###cum se fac arrayurile
 # fprint
 # lista1 = ["Andrei","Calin","Radu"]
 # lista2 = lista1

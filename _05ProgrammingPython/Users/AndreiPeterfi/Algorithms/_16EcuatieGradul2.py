@@ -4,7 +4,7 @@ def checkEcuatieGrad2(inputText: str):
     a = 1
     try:
         a = int(split[0])
-    except:
+    except ValueError:
         a = 1
     b = int(split[1][2:])
     c = int(split[2].split("=")[0])

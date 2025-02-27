@@ -72,7 +72,7 @@ def checkAvailableStoreMissingFood(dict_homeFood, dict_storeFood):
         key,
         value,
     ) in dict_homeFood.items():  # Asa se parcurge cu dictionar, cu cheie-valoare
-        if value == False:
+        if value is False:
             buyingList_dict[key] = dict_storeFood.get(key)
     return buyingList_dict
 

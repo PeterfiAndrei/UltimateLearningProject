@@ -7,7 +7,7 @@ def reverse_number(inputValue):
 
 
 def reverse_number_using_string(inputValue):
-    return int(str(inputValue)[::-1])  #### [::-1] e folosit pentru a inversa un string]
+    return int(str(inputValue)[::-1])  # [::-1] e folosit pentru a inversa un string]
 
 
 print(reverse_number(1251))

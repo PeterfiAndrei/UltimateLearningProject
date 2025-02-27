@@ -1,10 +1,7 @@
-from typing import final
-
-
 def removeDuplicateElements(inputList: list):
     finalList = []
     for element in inputList:
-        if not element in finalList:
+        if element not in finalList:
             finalList.append(element)
     return finalList
 

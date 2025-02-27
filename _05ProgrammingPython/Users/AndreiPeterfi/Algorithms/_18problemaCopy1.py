@@ -1,6 +1,3 @@
-import copy
-
-
 def duplicateInputString(inputString: str):
     inputString = inputString + inputString
 
