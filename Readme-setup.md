@@ -1,13 +1,13 @@
-I. Selenium + Java setup
+# I. Selenium + Java setup
 	1. From IntelliJ create a new project in the desired location
 		->Set java 11 & maven
 	2. In pom.xml add Selenium, Junit and WebdriverManager (search them on https://mvnrepository.com/ )
 
-II.  Python + Playwright setup
+# II.  Python + Playwright setup
 	1. Make sure Python is installed on your device:
 		a) python --version
 		b) If it is not installed: download it from https://www.python.org/downloads/
-			✔️ IMPORTANT: during installation, on the FIRST step check "Add Python to PATH"!
+		✔️ IMPORTANT: during installation, on the FIRST step check "Add Python to PATH"!
 	2. Check if 'py' is working
 		py -m venv venv
 	
@@ -23,12 +23,14 @@ II.  Python + Playwright setup
 		c) pip install playwright pytest
 		d) playwright install
 
-III. Typescript + Playwright setup
+# III. Typescript + Playwright setup
 	1. Navigate to the Typescript package
 	2. Using shell send:(you might need to install npm)
 		a) npm init -y
 		b) npm install playwright @playwright/test typescript --save-dev
 		c) npx playwright install
 
-IV. Java + Cucumber
-	TBD
+# IV. Java + Cucumber
+	1. From IntelliJ create a new project in the desired location
+		->Set java 11 & maven
+	2. In pom.xml add Selenium, Cucumber and WebdriverManager (search them on https://mvnrepository.com/ )
