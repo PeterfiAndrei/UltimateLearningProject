@@ -1,3 +1,7 @@
+#Root
+.vscode
+package-lock.json
+
 # IntelliJ / JetBrains
 .idea/
 *.iml
@@ -12,6 +16,8 @@ _04Python_Playwright/*.pyo
 # Node.js / TypeScript
 _03Typescript_Playwright/node_modules/
 _03Typescript_Playwright/dist/
+_03Typescript_Playwright/playwright-report/
+_03Typescript_Playwright/test-results/
 
 # Java / Maven
 _01Java_Selenium/target/
