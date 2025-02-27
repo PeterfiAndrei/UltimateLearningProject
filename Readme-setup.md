@@ -39,3 +39,4 @@
 # V. Programming
 	1. For Python, cd to _05Programming/PythonProgramming and install python if needed(google it)
 	2. Instal Python plugins
+    3. After cloning the project, you'll need to open only the Specific python package as a project
