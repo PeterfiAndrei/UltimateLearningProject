@@ -39,4 +39,7 @@
 # V. Programming
 	1. For Python, cd to _05Programming/PythonProgramming and install python if needed(google it)
 	2. Instal Python plugins
-    3. After cloning the project, you'll need to open only the Specific python package as a project
+    3. using shell navigate to the python folder
+    4. python -m venv venv
+    5. venv\Scripts\activate
+    6. You might need to restart your PC after adding python to env variables
