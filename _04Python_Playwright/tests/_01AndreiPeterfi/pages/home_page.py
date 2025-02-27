@@ -1,4 +1,4 @@
-from tests._01AndreiPeterfi.pages.base_page import (BasePage)
+from tests._01AndreiPeterfi.pages.base_page import BasePage
 
 
 class HomePage(BasePage):
