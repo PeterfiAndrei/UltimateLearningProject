@@ -17,5 +17,8 @@
   "directories": {
     "test": "tests"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "playwright-core": "^1.50.1"
+  }
 }
