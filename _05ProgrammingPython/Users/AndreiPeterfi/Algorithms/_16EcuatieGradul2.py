@@ -25,6 +25,6 @@ def checkEcuatieGrad2(inputText: str):
         return "No solutions"
 
 
-print(f"the solution is: {checkEcuatieGrad2('x^2+3x-70=0')}")  
+print(f"the solution is: {checkEcuatieGrad2('x^2+3x-70=0')}")
 print(f"the solution is: {checkEcuatieGrad2('2x^2-4x-6=0')}")
 print(f"the solution is: {checkEcuatieGrad2('0.5x^2-2x+2=0')}")

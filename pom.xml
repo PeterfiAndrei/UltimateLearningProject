@@ -11,9 +11,6 @@
     <modules>
         <module>_01Java_Selenium</module>
         <module>_02Java_Cucumber</module>
-        <module>_03Typescript_Playwright</module>
-        <module>_04Python_Playwright</module>
-        <module>_05ProgrammingPython/JavaProgramming</module>
     </modules>
 
     <properties>
