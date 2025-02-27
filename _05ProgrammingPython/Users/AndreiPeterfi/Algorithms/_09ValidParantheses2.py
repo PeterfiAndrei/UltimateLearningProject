@@ -4,11 +4,11 @@ def checkIfValidParanthese(inputString):
     str1 = "()"
     str2 = "[]"
     str3 = "{}"
-    for i in range(0,len(inputString),2):
-        subString = inputString[i:i+2]
-        if str1!=subString and str2!=subString and str3!=subString:
+    for i in range(0, len(inputString), 2):
+        subString = inputString[i : i + 2]
+        if str1 != subString and str2 != subString and str3 != subString:
             return False
     return True
 
-print(checkIfValidParanthese("()[]{}"))
 
+print(checkIfValidParanthese("()[]{}"))
