@@ -7,16 +7,10 @@ import pytest
 
 def pytest_addoption(parser):
     """Adaugă opțiuni custom pentru rularea testelor."""
-    parser.addoption(
-        "--browser", action="store", default="chromium", help="Browser implicit"
-    )
+    parser.addoption("--browser", action="store", default="chromium", help="Browser implicit")
     parser.addoption("--headed", action="store_true", help="Rulează în mod vizibil")
-    parser.addoption(
-        "--workers", action="store", default="4", type=int, help="Număr de workeri"
-    )
-    parser.addoption(
-        "--timeout", action="store", default="30000", type=int, help="Timeout global"
-    )
+    parser.addoption("--workers", action="store", default="4", type=int, help="Număr de workeri")
+    parser.addoption("--timeout", action="store", default="30000", type=int, help="Timeout global")
 
 
 @pytest.fixture(scope="session")
