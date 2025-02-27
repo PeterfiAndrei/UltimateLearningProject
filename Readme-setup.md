@@ -29,8 +29,13 @@
 		a) npm init -y
 		b) npm install playwright @playwright/test typescript --save-dev
 		c) npx playwright install
+	3. Run a test: npx playwright test formAuthentication.spec.ts --headed
 
 # IV. Java + Cucumber
 	1. From IntelliJ create a new project in the desired location
 		->Set java 11 & maven
 	2. In pom.xml add Selenium, Cucumber and WebdriverManager (search them on https://mvnrepository.com/ )
+
+# V. Programming
+	1. For Python, cd to _05Programming/PythonProgramming and install python if needed(google it)
+	2. Instal Python plugins
