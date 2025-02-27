@@ -14,8 +14,8 @@ homeFood = {
     "milk": False,
     "fish": True,
     "egg": True,
-    1: "Blana"
-    }
+    1: "Blana",
+}
 groceryFood = {
     "apple": True,
     "milk": True,
@@ -61,14 +61,24 @@ groceryFood = {
     "cherry": True,
     "strawberry": True,
     "blueberry": True,
-    "raspberry": True
+    "raspberry": True,
 }
 
 buyingList_dict = {}
+
+
 def checkAvailableStoreMissingFood(dict_homeFood, dict_storeFood):
-    for key,value in dict_homeFood.items():   #Asa se parcurge cu dictionar, cu cheie-valoare
+    for (
+        key,
+        value,
+    ) in dict_homeFood.items():  # Asa se parcurge cu dictionar, cu cheie-valoare
         if value == False:
             buyingList_dict[key] = dict_storeFood.get(key)
     return buyingList_dict
+
+
 # print(checkAvailableStoreMissingFood(homeFood,groceryFood))
-print("Missing items from home and availability in store:", dict(sorted((checkAvailableStoreMissingFood(homeFood,groceryFood).items()))))
+print(
+    "Missing items from home and availability in store:",
+    dict(sorted((checkAvailableStoreMissingFood(homeFood, groceryFood).items()))),
+)

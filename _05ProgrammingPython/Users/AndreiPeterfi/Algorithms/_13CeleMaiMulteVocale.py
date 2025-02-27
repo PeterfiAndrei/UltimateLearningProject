@@ -1,5 +1,7 @@
-def findMostVowels(inputText:str) -> str:
-    words = inputText.split()   #Default e spatiu, dar se poate da orice caracter sau string. separatorul va fi exclus
+def findMostVowels(inputText: str) -> str:
+    words = (
+        inputText.split()
+    )  # Default e spatiu, dar se poate da orice caracter sau string. separatorul va fi exclus
     longestWord = ""
     maxVowels = 0
     for word in words:
@@ -12,4 +14,7 @@ def findMostVowels(inputText:str) -> str:
             longestWord = word
     return longestWord
 
-print("The word with the most vowels is:",findMostVowels("aceasta e o propozitie lunga"))
+
+print(
+    "The word with the most vowels is:", findMostVowels("aceasta e o propozitie lunga")
+)
