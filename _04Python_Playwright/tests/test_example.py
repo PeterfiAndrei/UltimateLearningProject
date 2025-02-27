@@ -1,9 +1,5 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import Page
 
-def test_example():
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.goto("https://example.com")
-        assert "Example" in page.title()
-        browser.close()
+def test_homepage_title(page: Page):
+    page.goto("https://playwright.dev")
+    assert page.title() == "Fast and reliable end-to-end testing for modern web apps | Playwright"
