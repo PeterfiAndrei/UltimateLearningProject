@@ -36,4 +36,4 @@
 
     d) After you have more experience, you can automatically correct potential warnings using:
 
-    ```black .```
+    ```flake8 .```
