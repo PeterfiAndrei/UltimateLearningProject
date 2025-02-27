@@ -1,16 +1,39 @@
 # IntelliJ / JetBrains
 .idea/
+*.iml
+out/
 
 # Python
-venv/
-__pycache__/
-*.pyc
+_04Python_Playwright/venv/
+_04Python_Playwright/__pycache__/
+_04Python_Playwright/*.pyc
+_04Python_Playwright/*.pyo
 
 # Node.js / TypeScript
-node_modules/
-dist/
+_03Typescript_Playwright/node_modules/
+_03Typescript_Playwright/dist/
 
-# Maven / Java
-target/
-*.class
+# Java / Maven
+_01Java_Selenium/target/
+_01Java_Selenium/.idea/
+_04Java_Cucumber/target/
+_04Java_Cucumber/.idea/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+dependency-reduced-pom.xml
+release.properties
+
+# Logs & OS Files
 *.log
+*.swp
+.DS_Store
+Thumbs.db
+
+# Playwright Specific
+_04Python_Playwright/.playwright/
+_03Typescript_Playwright/.playwright/
+
+# Environment & Credentials (dacă folosești fișiere de configurare locale)
+.env
+.env.local
