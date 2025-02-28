@@ -61,10 +61,14 @@ jobs:
           echo "📂 Conținutul _03Typescript_Playwright/"
           ls -R _03Typescript_Playwright || echo "⚠️ Folderul _03Typescript_Playwright NU există!"
 
+      - name: 📂 Ensure Publish Directory Exists
+        run: mkdir -p ${{ github.workspace }}/actions_github_pages
+
+
       - name: 🚚 Copy Allure Report for Deployment
         run: |
           mkdir -p actions_github_pages
-          cp -r _03Typescript_Playwright/allure-report/. actions_github_pages/
+          cp -r _03Typescript_Playwright/allure-report/. ${{ github.workspace }}/actions_github_pages
 
 
       - name: 📂 Debug Publishing Directory  -----------
