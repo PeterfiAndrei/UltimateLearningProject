@@ -7,11 +7,11 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch: # Permite rularea manuală din GitHub Actions
+  workflow_dispatch:
 
 jobs:
   test:
-    runs-on: ubuntu-latest # Poți folosi și windows-latest, dar Ubuntu e mai rapid
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
