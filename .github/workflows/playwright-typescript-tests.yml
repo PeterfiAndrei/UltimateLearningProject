@@ -35,6 +35,9 @@ jobs:
       - name: 🕵️ Debug _03Typescript_Playwright
         run: ls -R _03Typescript_Playwright
 
+      - name: 📦 Install Allure Playwright Reporter
+        run: npm install --save-dev allure-playwright
+
 
       # 🔍 Debug dacă allure-results există
       - name: 🕵️ Check if allure-results exists
