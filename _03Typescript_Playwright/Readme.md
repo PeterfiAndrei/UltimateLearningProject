@@ -66,7 +66,7 @@
 
 ```
 
-# 4. Install Allure report locally:
+# 4. Install Allure Report locally:
 ```shell
   npm install --save-dev @playwright/test allure-playwright
 ```
