@@ -1,0 +1,53 @@
+name: Playwright Tests with Allure
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Permite rularea manuală din GitHub Actions
+
+jobs:
+  test:
+    runs-on: ubuntu-latest # Poți folosi și windows-latest, dar Ubuntu e mai rapid
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd _03Typescript_Playwright
+          npm install
+
+      - name: Run Playwright tests
+        run: |
+          cd _03Typescript_Playwright
+          npx playwright install --with-deps
+          npx playwright test
+
+      - name: Generate Allure Report
+        run: |
+          cd _03Typescript_Playwright
+          npx allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: _03Typescript_Playwright/allure-report
+          retention-days: 7
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _03Typescript_Playwright/allure-report
