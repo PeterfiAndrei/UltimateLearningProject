@@ -9,7 +9,7 @@ export default defineConfig({
     workers: 4, // Playwright va folosi 4 procese în paralel
     retries: 2, // Reîncearcă testele de max. 2 ori dacă eșuează
     // reporter: [['html', { open: 'never' }]], // Raport HTML standard
-    reporter: [["line"],['allure-playwright']], // Integrare cu Allure (necesită instalare)
+    reporter: [["line"],['allure-playwright', { outputFolder: '_03Typescript_Playwright/tests/allure-results' }]], // Integrare cu Allure (necesită instalare)
 
     use: {
         testIdAttribute: 'id', // Definește atributul implicit pentru testare, se va folosi getByTestId pentru a cauta
