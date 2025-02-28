@@ -43,5 +43,5 @@ _03Typescript_Playwright/.playwright/
 # Environment & Credentials (dacă folosești fișiere de configurare locale)
 .env
 .env.local
-/_03Typescript_Playwright/allure-report/
-/_03Typescript_Playwright/allure-results/
+#/_03Typescript_Playwright/allure-report/
+#/_03Typescript_Playwright/allure-results/
