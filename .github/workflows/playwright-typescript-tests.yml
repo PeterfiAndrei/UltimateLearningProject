@@ -24,7 +24,11 @@ jobs:
           node-version: 20
 
       - name: 📦 Install Dependencies
-        run: npm install
+        run: npm ci
+
+      - name: 🛠️ Install Playwright
+        run: npx playwright install --with-deps
+
 
       - name: ▶️ Run Playwright Tests
         run: npx playwright test || true  # Continuă execuția chiar dacă testele eșuează
