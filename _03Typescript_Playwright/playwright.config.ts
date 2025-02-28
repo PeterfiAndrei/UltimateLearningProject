@@ -13,7 +13,7 @@ export default defineConfig({
 
     use: {
         testIdAttribute: 'id', // Definește atributul implicit pentru testare, se va folosi getByTestId pentru a cauta
-        headless: false, // Rulează testele fără UI (true) sau cu UI vizibil (false)
+        headless: process.env.CI ? true : false, // Rulează testele fără UI (true) sau cu UI vizibil (false)
         viewport: { width: 1280, height: 720 }, // Dimensiunea ferestrei browserului
         ignoreHTTPSErrors: true, // Ignoră erorile SSL
         trace: 'on-first-retry', // Salvează trace doar dacă testul eșuează prima dată
