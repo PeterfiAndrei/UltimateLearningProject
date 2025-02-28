@@ -26,6 +26,9 @@ jobs:
       - name: 📦 Install Dependencies
         run: npm install
 
+      - name: 📦 Install Allure Playwright Reporter
+        run: npm install --save-dev allure-playwright
+
       - name: 🛠️ Install Playwright
         run: npx playwright install --with-deps
 
@@ -38,9 +41,6 @@ jobs:
 
       - name: 🕵️ Debug _03Typescript_Playwright
         run: ls -R _03Typescript_Playwright
-
-      - name: 📦 Install Allure Playwright Reporter
-        run: npm install --save-dev allure-playwright
 
 
       # 🔍 Debug dacă allure-results există
@@ -56,6 +56,10 @@ jobs:
           npm install -g allure-commandline@2.24.0
           mkdir -p _03Typescript_Playwright/allure-report
           allure generate _03Typescript_Playwright/allure-results -o _03Typescript_Playwright/allure-report --clean
+
+      - name: 🕵️ Debug Allure Report --------- (Verifică conținutul generat)
+        run: ls -R _03Typescript_Playwright/allure-report || echo "⚠️ Folderul allure-report este gol!"
+
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
