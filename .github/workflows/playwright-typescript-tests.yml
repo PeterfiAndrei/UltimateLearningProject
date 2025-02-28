@@ -29,6 +29,9 @@ jobs:
       - name: ▶️ Run Playwright Tests
         run: npx playwright test || true  # Continuă execuția chiar dacă testele eșuează
 
+      - name: 🕵️ Debug Working Directory
+        run: pwd && ls -R
+
       # 🔍 Debug dacă allure-results există
       - name: 🕵️ Check if allure-results exists
         run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
