@@ -32,3 +32,24 @@
 # 3. Python + Typescript
 1. Check everything with one command:
     `flake8 . && black --check . && npx eslint . --max-warnings=0`
+
+
+# 4. Java
+1. Add in `pom.xml` from Java project following code line in `<plugins>`:
+ ```html
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+```
+2. Create a `checkstyle.xml` and add rules from -> https://checkstyle.org/checks.html (documentation for checkstyle)
+3. If you encounter errors for DTD links from `pom.xml` go to File | Settings | Languages & Frameworks | Schemas and DTDs and add the link in the ignore section.
