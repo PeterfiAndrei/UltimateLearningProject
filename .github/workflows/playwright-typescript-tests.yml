@@ -80,7 +80,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: actions_github_pages
+          publish_dir: /home/runner/work/UltimateLearningProject/UltimateLearningProject/actions_github_pages
           keep_files: true
           publish_branch: gh-pages
 
