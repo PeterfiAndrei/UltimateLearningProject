@@ -68,12 +68,17 @@ jobs:
       - name: 🚚 Copy Allure Report for Deployment
         run: |
           mkdir -p actions_github_pages
-          cp -r _03Typescript_Playwright/allure-report/. ${{ github.workspace }}/actions_github_pages
+          cp -r _03Typescript_Playwright/allure-report/* ${{ github.workspace }}/actions_github_pages
 
 
       - name: 📂 Debug Publishing Directory  -----------
         run: ls -la ${{ github.workspace }}/actions_github_pages || echo "⚠️ Folderul nu există!"
 
+      - name: 📂 Verifică ce fișiere sunt copiate
+        run: ls -la _03Typescript_Playwright/allure-report
+
+      - name: 📂 Verifică conținutul final al folderului pentru deploy
+        run: ls -la /home/runner/work/UltimateLearningProject/UltimateLearningProject/actions_github_pages
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
