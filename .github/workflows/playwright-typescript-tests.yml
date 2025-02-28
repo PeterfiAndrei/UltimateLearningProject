@@ -29,6 +29,10 @@ jobs:
       - name: ▶️ Run Playwright Tests
         run: npx playwright test || true  # Continuă execuția chiar dacă testele eșuează
 
+      # 🔍 Debug după rularea testelor: verifică allure-results/
+      - name: 🕵️ Debug Allure Results
+        run: ls -R allure-results
+
       - name: 📊 Install and Generate Allure Report
         run: |
           npm install -g allure-commandline@2.24.0
@@ -37,10 +41,14 @@ jobs:
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN}}
           publish_dir: ./allure-report
           keep_files: true  # Păstrează toate rapoartele vechi
           publish_branch: gh-pages
+
+      # 🔍 Debug după generarea raportului: verifică allure-report/
+      - name: 🕵️ Debug Allure Report (Verifică conținutul generat)
+        run: ls -R allure-report || echo "⚠️ Folderul allure-report este gol!"
 
       - name: 🔗 Print Allure Report URL
         run: |
