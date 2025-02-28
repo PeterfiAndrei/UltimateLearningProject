@@ -64,8 +64,8 @@ jobs:
       - name: 🚚 Copy Allure Report for Deployment
         run: |
           mkdir -p /home/runner/actions_github_pages
-          shopt -s dotglob  # Permite copierea fișierelor ascunse (ex: .gitignore)
-          cp -r _03Typescript_Playwright/allure-report/* /home/runner/actions_github_pages/
+          cp -rT _03Typescript_Playwright/allure-report /home/runner/actions_github_pages
+
 
       - name: 🕵️ Debug Before Deploy
         run: ls -la /home/runner/actions_github_pages || echo "⚠️ Folderul este gol!"
@@ -75,7 +75,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: /home/runner/actions_github_pages
+          publish_dir: /home/runner/actions_github_pages/
           keep_files: true
           publish_branch: gh-pages
 
