@@ -29,8 +29,10 @@ jobs:
       - name: ▶️ Run Playwright Tests
         run: npx playwright test || true  # Continuă execuția chiar dacă testele eșuează
 
-      - name: 📊 Generate Allure Report
-        run: npx allure generate allure-results --clean -o allure-report/${{ github.run_id }}
+      - name: 📊 Install and Generate Allure Report
+        run: |
+          npm install -g allure-commandline@2.24.0
+          allure generate allure-results -o allure-report/${{ github.run_id }} --clean
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
