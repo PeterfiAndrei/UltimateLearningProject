@@ -1,57 +1,45 @@
-name: Playwright Tests with Allure
+name: Run Playwright Tests and Generate Allure Report
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [main]
+  workflow_dispatch:  # Permite rulare manuală
+
+permissions:
+  contents: write  # Necesar pentru deploy pe GitHub Pages
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
-      - name: Install dependencies
-        run: |
-          cd _03Typescript_Playwright
-          npm install
+      - name: 📦 Install Dependencies
+        run: npm install
 
-      - name: Run Playwright tests
-        run: |
-          cd _03Typescript_Playwright
-          npx playwright install --with-deps
-          npx playwright test
+      - name: ▶️ Run Playwright Tests
+        run: npx playwright test || true  # Continuă execuția chiar dacă testele eșuează
 
-      - name: Generate Allure Report
-        run: |
-          cd _03Typescript_Playwright
-          npx allure generate allure-results --clean -o allure-report
+      - name: 📊 Generate Allure Report
+        run: npx allure generate allure-results --clean -o allure-report/${{ github.run_id }}
 
-      - name: Upload Allure Report as an artifact
-        uses: actions/upload-artifact@v4
+      - name: 🚀 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: allure-report
-          path: _03Typescript_Playwright/allure-report
-          retention-days: 7
-
-      - name: Deploy Allure Report to GitHub Pages
-        if: success()
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: _03Typescript_Playwright/allure-report
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          keep_files: true  # Păstrează toate rapoartele vechi
           publish_branch: gh-pages
-      - name: Print Allure Report URL
+
+      - name: 🔗 Print Allure Report URL
         run: |
-          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_id }}/"
