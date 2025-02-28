@@ -61,13 +61,17 @@ jobs:
           echo "📂 Conținutul _03Typescript_Playwright/"
           ls -R _03Typescript_Playwright || echo "⚠️ Folderul _03Typescript_Playwright NU există!"
 
+      - name: 🚚 Copy Allure Report for Deployment
+        run: |
+          mkdir -p /home/runner/actions_github_pages
+          cp -r _03Typescript_Playwright/allure-report/* /home/runner/actions_github_pages/
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: ${{ github.workspace }}/_03Typescript_Playwright/allure-report
+          publish_dir: /home/runner/actions_github_pages
           keep_files: true
           publish_branch: gh-pages
 
