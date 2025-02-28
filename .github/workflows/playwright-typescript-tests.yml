@@ -38,15 +38,11 @@ jobs:
           npm install -g allure-commandline@2.24.0
           allure generate _03Typescript_Playwright/allure-results -o _03Typescript_Playwright/allure-report/${{ github.run_id }} --clean
 
-      # 🔍 Debug după generarea raportului
-      - name: 🕵️ Debug Allure Report (Verifică conținutul generat)
-        run: ls -R allure-report/${{ github.run_id }} || echo "⚠️ Folderul allure-report este gol!"
-
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN}}
-          publish_dir: ./_03Typescript_Playwright/allure-report/${{ github.run_id }}
+          publish_dir: _03Typescript_Playwright/allure-report/${{ github.run_id }}
           keep_files: true  # Păstrează toate rapoartele vechi
           publish_branch: gh-pages
 
