@@ -24,7 +24,7 @@ jobs:
           node-version: 20
 
       - name: 📦 Install Dependencies
-        run: npm ci
+        run: npm install
 
       - name: 🛠️ Install Playwright
         run: npx playwright install --with-deps
