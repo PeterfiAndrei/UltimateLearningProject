@@ -9,6 +9,6 @@ class HomePage(BasePage):
     def getNoOfListElements(self):
         return self.list_locator.count()
 
-    def navigate_to_page(self, page, page_to_navigate: str):
+    def navigate_to_page(self, page_to_navigate: str):
         element = self.page.get_by_text(page_to_navigate)
         element.click()
