@@ -18,6 +18,7 @@ _03Typescript_Playwright/node_modules/
 _03Typescript_Playwright/dist/
 _03Typescript_Playwright/playwright-report/
 _03Typescript_Playwright/test-results/
+_03Typescript_Playwright/package-lock.json
 
 # Java / Maven
 _01Java_Selenium/target/
