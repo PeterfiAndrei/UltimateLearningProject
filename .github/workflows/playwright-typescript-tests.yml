@@ -49,6 +49,18 @@ jobs:
       - name: 🕵️ Debug Allure Report
         run: ls -R _03Typescript_Playwright/allure-report || echo "⚠️ Folderul allure-report este gol!"
 
+      - name: 🛠️ Forțează copierea fișierelor Allure Report
+        run: |
+          mkdir -p _03Typescript_Playwright/allure-report
+          cp -r _03Typescript_Playwright/allure-report/* _03Typescript_Playwright/allure-report/
+
+      - name: 🕵️ Debug Allure Report Path
+        run: |
+          echo "📂 Conținutul _03Typescript_Playwright/"
+          ls -R _03Typescript_Playwright || echo "⚠️ Folderul _03Typescript_Playwright NU există!"
+
+
+
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
