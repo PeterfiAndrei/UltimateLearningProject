@@ -49,10 +49,12 @@ jobs:
       - name: 🕵️ Debug Allure Report
         run: ls -R _03Typescript_Playwright/allure-report || echo "⚠️ Folderul allure-report este gol!"
 
-      - name: 🛠️ Forțează copierea fișierelor Allure Report
+      - name: 🕵️ Debug Paths Before Deploy
         run: |
-          mkdir -p _03Typescript_Playwright/allure-report
-          cp -r _03Typescript_Playwright/allure-report/* _03Typescript_Playwright/allure-report/
+          echo "🔍 PWD:" $(pwd)
+          echo "🔍 HOME:" $HOME
+          echo "🔍 List _03Typescript_Playwright/allure-report:"
+          ls -la _03Typescript_Playwright/allure-report || echo "⚠️ Folderul allure-report NU există!"
 
       - name: 🕵️ Debug Allure Report Path
         run: |
