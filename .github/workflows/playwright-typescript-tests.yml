@@ -33,7 +33,7 @@ jobs:
       - name: 📊 Install and Generate Allure Report
         run: |
           npm install -g allure-commandline@2.24.0
-          allure generate _03Typescript_Playwright/allure-results -o _03Typescript_Playwright/allure-report/${{ github.run_id }} --clean
+          allure generate _03Typescript_Playwright/allure-results -o allure-report/${{ github.run_id }} --clean
 
       # 🔍 Debug după rularea testelor: verifică allure-results/
       - name: 🕵️ Debug Allure Results
