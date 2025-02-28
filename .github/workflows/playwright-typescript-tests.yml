@@ -40,6 +40,10 @@ jobs:
       - name: 🕵️ Check if allure-results exists
         run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
 
+      - name: 🕵️ Debug Working Directory22
+        run: pwd && ls -R
+
+
       - name: 📊 Install and Generate Allure Report
         run: |
           npm install -g allure-commandline@2.24.0
