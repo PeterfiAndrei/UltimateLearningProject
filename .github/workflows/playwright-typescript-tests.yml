@@ -32,6 +32,10 @@ jobs:
       - name: 🕵️ Debug Working Directory
         run: pwd && ls -R
 
+      - name: 🕵️ Debug _03Typescript_Playwright
+        run: ls -R _03Typescript_Playwright
+
+
       # 🔍 Debug dacă allure-results există
       - name: 🕵️ Check if allure-results exists
         run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
