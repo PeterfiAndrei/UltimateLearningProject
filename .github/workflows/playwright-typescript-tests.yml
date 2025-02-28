@@ -64,7 +64,8 @@ jobs:
       - name: 🚚 Copy Allure Report for Deployment
         run: |
           mkdir -p /home/runner/actions_github_pages
-          cp -rT _03Typescript_Playwright/allure-report /home/runner/actions_github_pages
+          rsync -av --exclude='.git/' _03Typescript_Playwright/allure-report/ /home/runner/actions_github_pages/
+
 
 
       - name: 🕵️ Debug Before Deploy
