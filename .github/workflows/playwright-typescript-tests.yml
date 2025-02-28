@@ -63,20 +63,22 @@ jobs:
 
       - name: 🚚 Copy Allure Report for Deployment
         run: |
-          mkdir -p /home/runner/actions_github_pages
-          rsync -av --exclude='.git/' _03Typescript_Playwright/allure-report/ /home/runner/actions_github_pages/
-
-
+          mkdir -p actions_github_pages
+          cp -r _03Typescript_Playwright/allure-report/. actions_github_pages/
 
       - name: 🕵️ Debug Before Deploy
         run: ls -la /home/runner/actions_github_pages || echo "⚠️ Folderul este gol!"
+
+      - name: 🛠️ Debug GH-Pages Inputs
+        run: echo |
+          "Publishing from: ${{ github.workspace }}/actions_github_pages"
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: /home/runner/actions_github_pages/
+          publish_dir: actions_github_pages
           keep_files: true
           publish_branch: gh-pages
 
