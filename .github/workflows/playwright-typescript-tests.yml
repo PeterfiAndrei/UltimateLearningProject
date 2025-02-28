@@ -71,9 +71,9 @@ jobs:
         run: ls -la /home/runner/actions_github_pages || echo "⚠️ Folderul este gol!"
 
 
-      - name: 🛠️ Debug GH-Pages Inputs
-        run: echo |
-          "Publishing from: ${{ github.workspace }}/actions_github_pages"
+#      - name: 🛠️ Debug GH-Pages Inputs
+#        run: echo |
+#          "Publishing from: ${{ github.workspace }}/actions_github_pages"
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
