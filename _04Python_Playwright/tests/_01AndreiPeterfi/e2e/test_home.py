@@ -15,5 +15,5 @@ class TestHome:
     def test_navigate_to_another_page(self, page):
         homePage = HomePage(page)
         homePage.goto("https://the-internet.herokuapp.com/")
-        homePage.navigate_to_page( "A/B Testing")
+        homePage.navigate_to_page("A/B Testing")
         assert page.title() == "The Internet"
