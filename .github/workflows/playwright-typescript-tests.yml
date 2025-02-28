@@ -66,8 +66,10 @@ jobs:
           mkdir -p actions_github_pages
           cp -r _03Typescript_Playwright/allure-report/. actions_github_pages/
 
+
       - name: 🕵️ Debug Before Deploy
         run: ls -la /home/runner/actions_github_pages || echo "⚠️ Folderul este gol!"
+
 
       - name: 🛠️ Debug GH-Pages Inputs
         run: echo |
