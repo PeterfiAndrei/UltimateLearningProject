@@ -1,6 +1,6 @@
 module.exports = [
   {
-    ignores: ["node_modules", "dist","_04Python_Playwright"],
+    ignores: ["node_modules", "dist","_04Python_Playwright","_03Typescript_Playwright/allure-report","_03Typescript_Playwright/allure-results"],
   },
   {
     languageOptions: {
