@@ -61,7 +61,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN}}
-          publish_dir: _03Typescript_Playwright/allure-report/${{ github.run_id }}
+          publish_dir: _03Typescript_Playwright/allure-report
           keep_files: true  # Păstrează toate rapoartele vechi
           publish_branch: gh-pages
 
