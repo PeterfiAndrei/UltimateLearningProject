@@ -86,9 +86,8 @@ jobs:
       - name: 🚀 Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          working-directory: _03Typescript_Playwright
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: allure-report
+          publish_dir: _03Typescript_Playwright/allure-report
           keep_files: true
           publish_branch: gh-pages
 
