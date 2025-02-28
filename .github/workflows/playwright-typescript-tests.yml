@@ -64,7 +64,11 @@ jobs:
       - name: 🚚 Copy Allure Report for Deployment
         run: |
           mkdir -p /home/runner/actions_github_pages
+          shopt -s dotglob  # Permite copierea fișierelor ascunse (ex: .gitignore)
           cp -r _03Typescript_Playwright/allure-report/* /home/runner/actions_github_pages/
+
+      - name: 🕵️ Debug Before Deploy
+        run: ls -la /home/runner/actions_github_pages || echo "⚠️ Folderul este gol!"
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
