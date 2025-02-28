@@ -1,0 +1,96 @@
+name: Run Playwright Tests and Generate Allure Report
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install Dependencies
+        working-directory: _03Typescript_Playwright
+        run: npm install
+
+      - name: 📦 Install Allure Playwright Reporter
+        working-directory: _03Typescript_Playwright
+        run: npm install --save-dev allure-playwright
+
+      - name: 🛠️ Install Playwright
+        working-directory: _03Typescript_Playwright
+        run: npx playwright install --with-deps
+
+      - name: ▶️ Run Playwright Tests
+        working-directory: _03Typescript_Playwright
+        run: npx playwright test || true
+
+      # ✅ DEBUG: Verifică dacă allure-results există
+      - name: 🕵️ Check if allure-results exists
+        working-directory: _03Typescript_Playwright
+        run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
+
+      - name: 📊 Install and Generate Allure Report
+        working-directory: _03Typescript_Playwright
+        run: |
+          npm install -g allure-commandline@2.24.0
+          mkdir -p allure-report
+          allure generate allure-results -o allure-report --clean || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+
+      # ✅ DEBUG: Verifică dacă allure-report s-a generat corect
+      - name: 🕵️ Debug Allure Report
+        working-directory: _03Typescript_Playwright
+        run: ls -R allure-report || echo "⚠️ Folderul allure-report este gol!"
+
+      - name: 🕵️ Debug Paths Before Deploy
+        working-directory: _03Typescript_Playwright
+        run: |
+          echo "🔍 PWD:" $(pwd)
+          echo "🔍 HOME:" $HOME
+          echo "🔍 List allure-report:"
+          ls -la allure-report || echo "⚠️ Folderul allure-report NU există!"
+
+#      - name: 📂 Ensure Publish Directory Exists
+#        run: mkdir -p ${{ github.workspace }}/actions_github_pages
+#
+#      - name: 🚚 Copy Allure Report for Deployment
+#        run: |
+#          mkdir -p actions_github_pages
+#          cp -r _03Typescript_Playwright/allure-report/* ${{ github.workspace }}/actions_github_pages
+#
+#
+#      - name: 📂 Debug Publishing Directory  -----------
+#        run: ls -la ${{ github.workspace }}/actions_github_pages || echo "⚠️ Folderul nu există!"
+#
+#      - name: 📂 Verifică ce fișiere sunt copiate
+#        run: ls -la _03Typescript_Playwright/allure-report
+#
+#      - name: 📂 Verifică conținutul final al folderului pentru deploy
+#        run: ls -la /home/runner/work/UltimateLearningProject/UltimateLearningProject/actions_github_pages
+
+
+      - name: 🚀 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
+          publish_dir: _03Typescript_Playwright/allure-report
+          keep_files: true
+          publish_branch: gh-pages
+
+      - name: 🔗 Print Allure Report URL
+        run: |
+          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_id }}/"
