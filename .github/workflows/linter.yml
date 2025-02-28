@@ -50,9 +50,18 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
+          distribution: 'correcto'
+          architecture: 'x64'
 
       - name: Install dependencies
         run: mvn install -DskipTests
 
       - name: Run Checkstyle
-        run: mvn checkstyle:check
+        run: mvn checkstyle:checkstyle
+
+      - name: Upload Checkstyle results
+        uses: mikeal/publish-to-github-action@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          title: 'Checkstyle Results'
+          files: checkstyle-result.xml
