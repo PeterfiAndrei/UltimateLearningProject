@@ -7,11 +7,11 @@ semnele de punctuatir nu sunt considerate cuvinte ex. intr-un = doua cuvinte
 o metoda ce primeste input propozitie si returneaza output dorit
  */
 public class Main {
-    static void countNumbersOfKeys(String propozitie) {
-        if (propozitie.isEmpty()) {
+    static void countNumbersOfKeys(String initialString) {
+        if (initialString.isEmpty()) {
             System.out.println("Stringul este gol");
         } else {
-            String replaceC = propozitie.replace(",", "").replace("'", " ").replace("?", "");
+            String replaceC = initialString.replace(",", "").replace("'", " ").replace("?", "");
 
             String[] propozitieArray = replaceC.split(" ");
             System.out.println(propozitieArray.length);
