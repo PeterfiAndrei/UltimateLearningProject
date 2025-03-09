@@ -7,7 +7,7 @@ semnele de punctuatir nu sunt considerate cuvinte ex. intr-un = doua cuvinte
 o metoda ce primeste input propozitie si returneaza output dorit
  */
 public class Main {
-    static void procesare(String propozitie) {
+    static void countNumbersOfKeys(String propozitie) {
         if (propozitie.isEmpty()) {
             System.out.println("Stringul este gol");
         } else {
@@ -25,7 +25,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String propozitie = "He is a very very good boy, isn't he?";
-        procesare(propozitie);
+        String initialString = "He is a very very good boy, isn't he?";
+        countNumbersOfKeys(initialString);
     }
 }
