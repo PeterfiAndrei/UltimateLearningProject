@@ -7,6 +7,9 @@ package-lock.json
 *.iml
 out/
 
+# VS Code
+.vscode/
+
 # Python
 _04Python_Playwright/venv/
 _04Python_Playwright/__pycache__/
@@ -14,7 +17,7 @@ _04Python_Playwright/*.pyc
 _04Python_Playwright/*.pyo
 
 # Node.js / TypeScript
-_03Typescript_Playwright/node_modules/
+**/node_modules/
 _03Typescript_Playwright/dist/
 _03Typescript_Playwright/playwright-report/
 _03Typescript_Playwright/test-results/
@@ -39,6 +42,9 @@ Thumbs.db
 # Playwright Specific
 _04Python_Playwright/.playwright/
 _03Typescript_Playwright/.playwright/
+**/allure-report/
+**/allure-results/
+test-results/
 
 # Environment & Credentials (dacă folosești fișiere de configurare locale)
 .env
