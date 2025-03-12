@@ -105,44 +105,72 @@ jobs:
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
         run: npx playwright test || true
-
-      - name: Upload Report
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
+##########
+      - name: 📂 Download Previous Report from gh-pages
+        uses: actions/checkout@v4
+        if: ${{ github.event_name != 'push' }}
         with:
-          name: playwright-blob-report-${{ matrix.shard }}
-          path: ./_03Typescript_Playwright/blob-report/
-          retention-days: 1
+          repository: ${{ github.repository }}
+          path: gh-pages
+          ref: gh-pages
 
-      - name: Preserve Allure History
+      - name: ♻️ Copy Previous History (if exists)
+        run: |
+          if [ -d "gh-pages/history" ]; then
+            mkdir -p _03Typescript_Playwright/allure-results/history
+            cp -r gh-pages/history _03Typescript_Playwright/allure-results/
+          fi
+
+      - name: ✨ Generate Allure Report with History
         working-directory: _03Typescript_Playwright
         run: |
-          mkdir -p allure-results/history
-          if [ -d allure-report/history ]; then mv allure-report/history allure-results/; fi
-  
-      - name: Upload Allure results
-        uses: actions/upload-artifact@v4
+          allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+
+      - name: 🚀 Deploy Allure Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: allure-results
-          path: ./_03Typescript_Playwright/allure-results/
-          retention-days: 1
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _03Typescript_Playwright/allure-report
+
+          ###################
+
+      # - name: Upload Report
+      #   if: success() || failure()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: playwright-blob-report-${{ matrix.shard }}
+      #     path: ./_03Typescript_Playwright/blob-report/
+      #     retention-days: 1
+
+      # - name: Preserve Allure History
+      #   working-directory: _03Typescript_Playwright
+      #   run: |
+      #     mkdir -p allure-results/history
+      #     if [ -d allure-report/history ]; then mv allure-report/history allure-results/; fi
+  
+      # - name: Upload Allure results
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: allure-results
+      #     path: ./_03Typescript_Playwright/allure-results/
+      #     retention-days: 1
         
   
 
 
 
 
-      # ✅ DEBUG: Verifică dacă allure-results există
-      - name: 🕵️ Check if allure-results exists
-        working-directory: _03Typescript_Playwright
-        run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
+      # # ✅ DEBUG: Verifică dacă allure-results există
+      # - name: 🕵️ Check if allure-results exists
+      #   working-directory: _03Typescript_Playwright
+      #   run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
 
 
-      - name: Generate Allure Report
-        working-directory: _03Typescript_Playwright
-        run: |
-          npm install -g allure-commandline --save-dev
-          allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+      # - name: Generate Allure Report
+      #   working-directory: _03Typescript_Playwright
+      #   run: |
+      #     npm install -g allure-commandline --save-dev
+      #     allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
 
       # - name: 📊 Install and Generate Allure Report
       #   working-directory: _03Typescript_Playwright
@@ -185,13 +213,13 @@ jobs:
 #        run: ls -la /home/runner/work/UltimateLearningProject/UltimateLearningProject/actions_github_pages
 
 
-      - name: 🚀 Deploy Allure Report to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: ./_03Typescript_Playwright/allure-report
-          keep_files: true
-          publish_branch: gh-pages
+      # - name: 🚀 Deploy Allure Report to GitHub Pages
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
+      #     publish_dir: ./_03Typescript_Playwright/allure-report
+      #     keep_files: true
+      #     publish_branch: gh-pages
 
       - name: 🔗 Print Allure Report URL
         run: |
