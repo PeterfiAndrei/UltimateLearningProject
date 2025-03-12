@@ -131,22 +131,23 @@ jobs:
         run: |
           mkdir -p allure-report
           allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
-        
+      
+      - name: 📝 Format Branch Name
+        id: format_branch_name
+        run: |
+          formatted_name=$(echo "${{ github.head_ref }}" | sed 's#refs/heads/##; s#refs/pull/##; s#/merge##; s#/#-#g')
+          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
+              
       - name: ✅ Check if Allure Report Exists
         id: check_report
         run: |
-          if [ -d "_03Typescript_Playwright/allure-report" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
+          if [ -d "_03Typescript_Playwright/allure-report/${{ env.formatted_name }}" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
             echo "exists=true" >> $GITHUB_ENV
           else
             echo "exists=false" >> $GITHUB_ENV
           fi
 
-      - name: 📝 Format Branch Name
-        id: format_branch_name
-        run: |
-          formatted_name=$(echo "${{ github.ref }}" | sed 's#refs/heads/##; s#refs/pull/##; s#/merge##; s#/#-#g')
-          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
-      
+
       - name: 🚀 Deploy Allure Report to GitHub Pages
         if: ${{ env.exists == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
