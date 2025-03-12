@@ -107,14 +107,25 @@ jobs:
         working-directory: _03Typescript_Playwright
         run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
 
-      - name: 📊 Install and Generate Allure Report
+      - name: Preserve Allure History
         working-directory: _03Typescript_Playwright
         run: |
-          npm install -g allure-commandline@2.24.0
-          mkdir -p allure-report
           mkdir -p allure-results/history
           if [ -d allure-report/history ]; then mv allure-report/history allure-results/; fi
-          allure generate allure-results -o allure-report --clean || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+
+      - name: Generate Allure Report
+        working-directory: _03Typescript_Playwright
+        run: |
+          allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+
+      # - name: 📊 Install and Generate Allure Report
+      #   working-directory: _03Typescript_Playwright
+      #   run: |
+      #     npm install -g allure-commandline@2.24.0
+      #     mkdir -p allure-report
+      #     mkdir -p allure-results/history
+      #     if [ -d allure-report/history ]; then mv allure-report/history allure-results/; fi
+      #     allure generate allure-results -o allure-report --clean || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
 
       # # ✅ DEBUG: Verifică dacă allure-report s-a generat corect
       # - name: 🕵️ Debug Allure Report
