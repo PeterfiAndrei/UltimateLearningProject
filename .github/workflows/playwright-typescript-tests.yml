@@ -90,7 +90,12 @@ jobs:
 
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
+        continue-on-error: true
         run: npx playwright test
+
+      - name: 🚩 Fail if Tests Failed
+        if: ${{ failure() }}
+        run: exit 1
 
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
