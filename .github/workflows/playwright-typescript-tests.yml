@@ -223,7 +223,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.ACTIONS_ACCESS_TOKEN }}
-          publish_dir: _03Typescript_Playwright/allure-report
+          publish_dir: _03Typescript_Playwright/allure-report/
           keep_files: true
           publish_branch: gh-pages
 
