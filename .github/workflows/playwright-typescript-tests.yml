@@ -1,22 +1,65 @@
-name: Run Playwright Tests and Generate Allure Report
+name: Playwright Browser Tests
+run-name: ${{ github.workflow }} @ ${{ github.ref_name }}
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  merge_group:
+    branches: [master]
+    types: [checks_requested]
   workflow_dispatch:
+
+concurrency:
+  # Only cancel in-progress runs if the branches are other than master
+  # All commits pushed to master must be validated
+    group: ${{ github.workflow }}-${{ github.ref_name == 'master' && github.run_id || github.event.pull_request.number || github.ref_name }}
+    cancel-in-progress: true
+
 
 permissions:
   contents: write
 
 jobs:
+  # build:
+    # not needed
   test:
+    name: Test
+    # needs: build  # not needed
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+    env:
+      PLAYWRIGHT_SHARD: ${{ matrix.shard }}
 
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Download
+        uses: actions/download-artifact@v4
+        with: { name: build }
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          key: build${{ hashFiles('yarn.lock', '_03Typescript_Playwright/yarn.lock')}}
+          restore-keys: |
+            build${{ hashFiles('yarn.lock', '_03Typescript_Playwright/yarn.lock')}}
+            build
+          path: |
+            ~/.m2/repository
+            ~/.cache
+            ~/.yarn
+
+      - name: Untar
+        run: make unpackage-build
+
+      # - name: Run
+      #   run: make _03Typescript_Playwright
 
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
