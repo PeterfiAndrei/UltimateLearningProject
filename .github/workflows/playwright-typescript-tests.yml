@@ -92,10 +92,6 @@ jobs:
         working-directory: _03Typescript_Playwright
         run: npx playwright test || echo "exit_code=$?" >> $GITHUB_ENV
 
-      - name: 🚩 Fail if Tests Failed
-        if: ${{ env.exit_code != '0' }}
-        run: exit 1
-
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
         if: ${{ github.event_name != 'push' }}
@@ -149,3 +145,7 @@ jobs:
         if: env.exists == 'true'
         run: |
           echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.formatted_name }}"
+
+      - name: 🚩 Fail if Tests Failed
+        if: ${{ env.exit_code != '0' }}
+        run: exit 1
