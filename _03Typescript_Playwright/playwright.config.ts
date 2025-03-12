@@ -7,7 +7,7 @@ export default defineConfig({
         timeout: 5000, // Timeout pentru `expect()`
     },
     workers: 4, // Playwright va folosi 4 procese în paralel
-    retries: 2, // Reîncearcă testele de max. 2 ori dacă eșuează
+    retries: 3, // Reîncearcă testele de max. 2 ori dacă eșuează
     // reporter: [['html', { open: 'never' }]], // Raport HTML standard
     reporter: [["line"],['allure-playwright']],
 

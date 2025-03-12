@@ -2,7 +2,7 @@ import {test, expect} from '@playwright/test';
 import {gotoHomePage, navigateToPagez} from '../Pages/HomePage';
 
 
-test.describe('Testing the For Authentication page', () => {
+test.describe('Testing the Authentication page', () => {
     const usernameField = "#username"
     const passwordField = "#password"
     const btnSubmit = 'button[type="submit"]'

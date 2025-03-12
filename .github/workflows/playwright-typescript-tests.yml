@@ -90,7 +90,7 @@ jobs:
 
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
-        run: npx playwright test || echo "exit_code=$?" >> $GITHUB_ENV
+        run: npx playwright test --reporter=line,allure-playwright || echo "exit_code=$?" >> $GITHUB_ENV
 
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
