@@ -10,9 +10,9 @@ export default defineConfig({
     retries: 3, // Reîncearcă testele de max. 2 ori dacă eșuează
     // reporter: [['html', { open: 'never' }]], // Raport HTML standard
     reporter: [
-        ["line"],
+        ["list"],
         ['allure-playwright'],
-        ['_03Typescript_Playwright/reporters/flaky-reporter.js']
+        ['./reporters/flaky-reporter.js']
     ],
 
     use: {
