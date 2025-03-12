@@ -142,7 +142,7 @@ jobs:
       - name: ✅ Check if Allure Report Exists
         id: check_report
         run: |
-          if [ -d "_03Typescript_Playwright/allure-report/${{ env.formatted_name }}" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
+          if [ -d "_03Typescript_Playwright/allure-report" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
             echo "exists=true" >> $GITHUB_ENV
           else
             echo "exists=false" >> $GITHUB_ENV
