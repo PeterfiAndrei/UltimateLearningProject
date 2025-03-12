@@ -55,20 +55,17 @@ jobs:
             ~/.cache
             ~/.yarn
 
-      # - name: Untar
-      #   run: make unpackage-build
-
-      # - name: Run
-      #   run: make _03Typescript_Playwright
-
       - name: 🛠️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: 📦 Install Dependencies
-        working-directory: _03Typescript_Playwright
-        run: npm install
+      # - name: 📦 Install Dependencies
+      #   working-directory: _03Typescript_Playwright
+      #   run: npm install
+      
+      - name: 🛠️ Install Dependencies
+        run: yarn install
 
       - name: 📦 Install Allure Playwright Reporter
         working-directory: _03Typescript_Playwright
@@ -91,9 +88,6 @@ jobs:
           path: ~/.cache/ms-playwright
           key: playwright-browsers
 
-      - name: 🛠️ Install Dependencies
-        run: yarn install
-
       - name: 🌐 Install Playwright Browsers
         if: ${{ steps.cache-browsers.outputs.cache-hit != 'true' }}
         run: npx playwright install
@@ -109,7 +103,6 @@ jobs:
         working-directory: _03Typescript_Playwright
         run: npx playwright test || true
 
-#############
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
         if: ${{ github.event_name != 'push' }}
@@ -156,84 +149,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _03Typescript_Playwright/allure-report
           destination_dir: ${{ env.formatted_name }}
-  
+
+      - name: 🧹 Clean Up
+        if: env.exists == 'true'
+        run: rm -rf _03Typescript_Playwright/allure-results
+        
 
       - name: 🔗 Print Allure Report URL
+        if: env.exists == 'true'
         run: |
           echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.formatted_name }}"
-
-
-        # merge-reports:
-  #   name: Merge-Reports
-  #   if: success() || failure()
-  #   needs: test
-  #   runs-on: main
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-
-  #     - name: Download Reports
-  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: playwright/blob-report/
-  #         pattern: playwright-blob-report-*
-  #         merge-multiple: true
-
-  #     - name: Download Alure Results
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         path: _03Typescript_Playwright/allure-results/
-  #         pattern: allure-results-*
-  #         merge-multiple: true
-
-  #     - name: Run
-  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-  #       run: make playwright-merge-reports
-
-  #     - name: Upload Report
-  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: playwright-report-attempt-${{ github.run_attempt }}
-  #         path: _03Typescript_Playwright/playwright-report
-  #         retention-days: 3
-
-  #     - name: Upload Allure Report
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: allure-results
-  #         path: ./_03Typescript_Playwright/allure-results/
-  #         retention-days: 10
-
-  # generate-allure-report:
-  #   env:
-  #     ENVIRONMENT: impostor
-    
-  #   defaults:
-  #     run:
-  #       working-directory: ./_03Typescript_Playwright
-  #   if:
-  #     success() || failure()
-  #   needs: test
-  #   runs-on: main
-
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
-      
-  #     - name: Install allure dep
-  #       run: yarn
-      
-  #     - name: Download
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: allure-results
-  #         path: ./_03Typescript_Playwright/allure-results/
-
-  #     - name: Set timestamp
-  #       id: time-stamp-id
-  #       run: echo "timestamp=$(date --utc +%Y%m%d-%H%M%SZ)" >> "$GITHUB_OUTPUT"
-
-      # - name: Generate, upload and write URL
