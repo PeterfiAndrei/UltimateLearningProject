@@ -96,7 +96,7 @@ jobs:
 
       - name: 🌐 Install Playwright Browsers
         if: ${{ steps.cache-browsers.outputs.cache-hit != 'true' }}
-        run: npx playwright install chromium
+        run: npx playwright install
 
       # - name: 🛠️ Install Playwright
       #   working-directory: _03Typescript_Playwright
@@ -113,7 +113,7 @@ jobs:
           name: playwright-blob-report-${{ matrix.shard }}
           path: ./_03Typescript_Playwright/blob-report/
           retention-days: 1
-          
+
       - name: Preserve Allure History
         working-directory: _03Typescript_Playwright
         run: |
