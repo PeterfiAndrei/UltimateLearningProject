@@ -140,10 +140,6 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_ENV
           fi
-
-      - name: 📝 Format Branch Name
-        id: format_branch_name
-        run: echo "::set-output name=formatted_name::$(echo ${{ github.ref_name }} | sed 's#/#-#g')"
   
       - name: 🚀 Deploy Allure Report to GitHub Pages
         if: steps.check_report.outputs.exists == 'true'
@@ -151,7 +147,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _03Typescript_Playwright/allure-report
-          destination_dir: ${{ steps.format_branch_name.outputs.formatted_name }}
+          destination_dir: ${{ env.formatted_name }}
   
 
       - name: 🔗 Print Allure Report URL
