@@ -39,11 +39,7 @@ jobs:
       - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      # - name: Download
-      #   uses: actions/download-artifact@v4
-      #   with: { name: build }
-
-      - name: Cache
+      - name: 🗃️ Cache Maven and Yarn Artifacts
         uses: actions/cache@v4
         with:
           key: build${{ hashFiles('yarn.lock', '_03Typescript_Playwright/yarn.lock')}}
@@ -55,23 +51,7 @@ jobs:
             ~/.cache
             ~/.yarn
 
-      - name: 🛠️ Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      # - name: 📦 Install Dependencies
-      #   working-directory: _03Typescript_Playwright
-      #   run: npm install
-      
-      - name: 🛠️ Install Dependencies
-        run: yarn install
-
-      - name: 📦 Install Allure Playwright Reporter
-        working-directory: _03Typescript_Playwright
-        run: npm install --save-dev allure-playwright
-
-      - name: 📦 Cache Node.js modules
+      - name: 💾 Cache Node.js modules
         uses: actions/cache@v4
         with:
           path: |
@@ -80,13 +60,26 @@ jobs:
           key: node-modules-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             node-modules-
-
-      - name: 🗃️ Cache Playwright Browsers
-        id: cache-browsers  # Setăm un ID pentru acest pas
+    
+      - name: 💾 Cache Playwright Browsers
+        id: cache-browsers
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: playwright-browsers
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: 🛠️ Install Dependencies
+        run: yarn install
+
+      - name: 🛠️ Install Allure Playwright Reporter
+        working-directory: _03Typescript_Playwright
+        run: npm install --save-dev allure-playwright
+
 
       - name: 🌐 Install Playwright Browsers
         if: ${{ steps.cache-browsers.outputs.cache-hit != 'true' }}
@@ -95,13 +88,9 @@ jobs:
       - name: 🛠️ Install Allure
         run: npm install -g allure-commandline --save-dev
 
-      # - name: 🛠️ Install Playwright
-      #   working-directory: _03Typescript_Playwright
-      #   run: npx playwright install chromium --with-deps
-
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
-        run: npx playwright test || true
+        run: npx playwright test
 
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
@@ -110,6 +99,7 @@ jobs:
           repository: ${{ github.repository }}
           path: gh-pages
           ref: gh-pages
+
       - name: 📝 Format Branch Name
         id: format_branch_name
         run: |
@@ -130,8 +120,6 @@ jobs:
           mkdir -p allure-report
           allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
       
- 
-              
       - name: ✅ Check if Allure Report Exists
         id: check_report
         run: |
@@ -140,7 +128,6 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_ENV
           fi
-
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
         if: env.exists == 'true'
@@ -154,7 +141,6 @@ jobs:
         if: env.exists == 'true'
         run: rm -rf _03Typescript_Playwright/allure-results
         
-
       - name: 🔗 Print Allure Report URL
         if: env.exists == 'true'
         run: |
