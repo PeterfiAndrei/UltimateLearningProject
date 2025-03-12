@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1, 2]
+        shard: [1]
     env:
       PLAYWRIGHT_SHARD: ${{ matrix.shard }}
 
@@ -87,14 +87,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: playwright-blob-report-${{ matrix.shard }}
-          path: playwright/blob-report/
+          path: ./_03Typescript_Playwright/blob-report/
           retention-days: 1
 
       - name: Upload Allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: _03Typescript_Playwright/allure-results/
+          path: ./_03Typescript_Playwright/allure-results/
           retention-days: 1
         
   merge-reports:
