@@ -15,7 +15,7 @@ test.describe('Testing the Home Page', () => {
   });
 
   test('Check HomePage no of list elements', async ({ page }) => {
-    await expect(page).toHaveTitle("The Internet")
+    await expect(page).toHaveTitle("The In2ternet")
     expect(await getNoOfListElements(page)).toBe(44)
   });
 
