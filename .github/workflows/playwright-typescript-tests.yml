@@ -97,78 +97,78 @@ jobs:
           path: ./_03Typescript_Playwright/allure-results/
           retention-days: 1
         
-  merge-reports:
-    name: Merge-Reports
-    if: success() || failure()
-    needs: test
-    runs-on: main
+  # merge-reports:
+  #   name: Merge-Reports
+  #   if: success() || failure()
+  #   needs: test
+  #   runs-on: main
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Download Reports
-        if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-        uses: actions/download-artifact@v4
-        with:
-          path: playwright/blob-report/
-          pattern: playwright-blob-report-*
-          merge-multiple: true
+  #     - name: Download Reports
+  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: playwright/blob-report/
+  #         pattern: playwright-blob-report-*
+  #         merge-multiple: true
 
-      - name: Download Alure Results
-        uses: actions/download-artifact@v4
-        with:
-          path: _03Typescript_Playwright/allure-results/
-          pattern: allure-results-*
-          merge-multiple: true
+  #     - name: Download Alure Results
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         path: _03Typescript_Playwright/allure-results/
+  #         pattern: allure-results-*
+  #         merge-multiple: true
 
-      - name: Run
-        if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-        run: make playwright-merge-reports
+  #     - name: Run
+  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
+  #       run: make playwright-merge-reports
 
-      - name: Upload Report
-        if: ${{ contains(join(needs.*.result, ','), 'failure')}}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-attempt-${{ github.run_attempt }}
-          path: _03Typescript_Playwright/playwright-report
-          retention-days: 3
+  #     - name: Upload Report
+  #       if: ${{ contains(join(needs.*.result, ','), 'failure')}}
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: playwright-report-attempt-${{ github.run_attempt }}
+  #         path: _03Typescript_Playwright/playwright-report
+  #         retention-days: 3
 
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-results
-          path: ./_03Typescript_Playwright/allure-results/
-          retention-days: 10
+  #     - name: Upload Allure Report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: allure-results
+  #         path: ./_03Typescript_Playwright/allure-results/
+  #         retention-days: 10
 
-  generate-allure-report:
-    env:
-      ENVIRONMENT: inpostor
+  # generate-allure-report:
+  #   env:
+  #     ENVIRONMENT: impostor
     
-    defaults:
-      run:
-        working-directory: ./_03Typescript_Playwright
-    if:
-      success() || failure()
-    needs: test
-    runs-on: main
+  #   defaults:
+  #     run:
+  #       working-directory: ./_03Typescript_Playwright
+  #   if:
+  #     success() || failure()
+  #   needs: test
+  #   runs-on: main
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
       
-      - name: Install allure dep
-        run: yarn
+  #     - name: Install allure dep
+  #       run: yarn
       
-      - name: Download
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: ./_03Typescript_Playwright/allure-results/
+  #     - name: Download
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: allure-results
+  #         path: ./_03Typescript_Playwright/allure-results/
 
-      - name: Set timestamp
-        id: time-stamp-id
-        run: echo "timestamp=$(date --utc +%Y%m%d-%H%M%SZ)" >> "$GITHUB_OUTPUT"
+  #     - name: Set timestamp
+  #       id: time-stamp-id
+  #       run: echo "timestamp=$(date --utc +%Y%m%d-%H%M%SZ)" >> "$GITHUB_OUTPUT"
 
       # - name: Generate, upload and write URL
 
