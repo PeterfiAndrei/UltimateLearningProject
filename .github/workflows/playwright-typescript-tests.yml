@@ -99,29 +99,29 @@ jobs:
         
 
       # ✅ DEBUG: Verifică dacă allure-results există
-      - name: 🕵️ Check if allure-results exists
-        working-directory: ./_03Typescript_Playwright
-        run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
+      # - name: 🕵️ Check if allure-results exists
+      #   working-directory: ./_03Typescript_Playwright
+      #   run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
 
-      - name: 📊 Install and Generate Allure Report
-        working-directory: ./_03Typescript_Playwright
-        run: |
-          npm install -g allure-commandline@2.24.0
-          mkdir -p allure-report
-          allure generate allure-results -o allure-report --clean || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+      # - name: 📊 Install and Generate Allure Report
+      #   working-directory: ./_03Typescript_Playwright
+      #   run: |
+      #     npm install -g allure-commandline@2.24.0
+      #     mkdir -p allure-report
+      #     allure generate allure-results -o allure-report --clean || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
 
-      # ✅ DEBUG: Verifică dacă allure-report s-a generat corect
-      - name: 🕵️ Debug Allure Report
-        working-directory: ./_03Typescript_Playwright
-        run: ls -R allure-report || echo "⚠️ Folderul allure-report este gol!"
+      # # ✅ DEBUG: Verifică dacă allure-report s-a generat corect
+      # - name: 🕵️ Debug Allure Report
+      #   working-directory: ./_03Typescript_Playwright
+      #   run: ls -R allure-report || echo "⚠️ Folderul allure-report este gol!"
 
-      - name: 🕵️ Debug Paths Before Deploy
-        working-directory: ./_03Typescript_Playwright
-        run: |
-          echo "🔍 PWD:" $(pwd)
-          echo "🔍 HOME:" $HOME
-          echo "🔍 List allure-report:"
-          ls -la allure-report || echo "⚠️ Folderul allure-report NU există!"
+      # - name: 🕵️ Debug Paths Before Deploy
+      #   working-directory: ./_03Typescript_Playwright
+      #   run: |
+      #     echo "🔍 PWD:" $(pwd)
+      #     echo "🔍 HOME:" $HOME
+      #     echo "🔍 List allure-report:"
+      #     ls -la allure-report || echo "⚠️ Folderul allure-report NU există!"
 
 #      - name: 📂 Ensure Publish Directory Exists
 #        run: mkdir -p ${{ github.workspace }}/actions_github_pages
