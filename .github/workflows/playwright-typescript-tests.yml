@@ -140,7 +140,13 @@ jobs:
           else
             echo "exists=false" >> $GITHUB_ENV
           fi
-  
+
+      - name: 📝 Format Branch Name
+        id: format_branch_name
+        run: |
+          formatted_name=$(echo '${{ github.ref_name }}' | sed 's#/#-#g')
+          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
+      
       - name: 🚀 Deploy Allure Report to GitHub Pages
         if: steps.check_report.outputs.exists == 'true'
         uses: peaceiris/actions-gh-pages@v4
@@ -152,7 +158,7 @@ jobs:
 
       - name: 🔗 Print Allure Report URL
         run: |
-          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/$formatted_name/"
+          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
 
 
         # merge-reports:
