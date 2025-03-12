@@ -100,7 +100,7 @@ jobs:
 
       - name: 🛠️ Install Allure
         run: npm install -g allure-commandline --save-dev
-        
+
       # - name: 🛠️ Install Playwright
       #   working-directory: _03Typescript_Playwright
       #   run: npx playwright install chromium --with-deps
@@ -108,7 +108,7 @@ jobs:
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
         run: npx playwright test || true
-##########
+############
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
         if: ${{ github.event_name != 'push' }}
