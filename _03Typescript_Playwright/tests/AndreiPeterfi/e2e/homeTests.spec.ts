@@ -11,11 +11,11 @@ test.describe('Testing the Home Page', () => {
   test('Check HomePage Title', async ({ page }) => {
     await expect(page).toHaveTitle("The Internet")
     await expect(page).toHaveURL("https://the-internet.herokuapp.com/")
-    await expect(page.locator("h1")).toHaveText("Welcome to t4he-internet")
+    await expect(page.locator("h1")).toHaveText("Welcome to the-internet")
   });
 
   test('Check HomePage no of list elements', async ({ page }) => {
-    await expect(page).toHaveTitle("The In1ternet")
+    await expect(page).toHaveTitle("The Internet")
     expect(await getNoOfListElements(page)).toBe(44)
   });
 
