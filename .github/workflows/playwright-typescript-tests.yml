@@ -148,7 +148,7 @@ jobs:
           echo "formatted_name=$formatted_name" >> $GITHUB_ENV
       
       - name: 🚀 Deploy Allure Report to GitHub Pages
-        if: steps.check_report.outputs.exists == 'true'
+        if: ${{ env.exists == 'true' }}
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
