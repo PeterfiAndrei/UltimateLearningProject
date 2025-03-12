@@ -90,11 +90,10 @@ jobs:
 
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
-        continue-on-error: true
-        run: npx playwright test
+        run: npx playwright test || echo "exit_code=$?" >> $GITHUB_ENV
 
       - name: 🚩 Fail if Tests Failed
-        if: ${{ failure() }}
+        if: ${{ env.exit_code != '0' }}
         run: exit 1
 
       - name: 📂 Download Previous Report from gh-pages
