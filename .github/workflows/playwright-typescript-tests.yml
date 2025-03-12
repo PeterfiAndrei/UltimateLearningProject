@@ -108,6 +108,7 @@ jobs:
       - name: ▶️ Run Playwright Tests
         working-directory: _03Typescript_Playwright
         run: npx playwright test || true
+
 ############
       - name: 📂 Download Previous Report from gh-pages
         uses: actions/checkout@v4
@@ -119,21 +120,42 @@ jobs:
 
       - name: ♻️ Copy Previous History (if exists)
         run: |
-          if [ -d "gh-pages/history" ]; then
+          BRANCH_NAME=${GITHUB_REF_NAME//\//-}
+          if [ -d "gh-pages/$BRANCH_NAME/history" ]; then
             mkdir -p _03Typescript_Playwright/allure-results/history
-            cp -r gh-pages/history _03Typescript_Playwright/allure-results/
+            cp -r gh-pages/$BRANCH_NAME/history _03Typescript_Playwright/allure-results/
           fi
 
       - name: ✨ Generate Allure Report with History
         working-directory: _03Typescript_Playwright
         run: |
+          mkdir -p allure-report
           allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
-
+        
+      - name: ✅ Check if Allure Report Exists
+        id: check_report
+        run: |
+          if [ -d "_03Typescript_Playwright/allure-report" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "exists=false" >> $GITHUB_ENV
+          fi
+  
       - name: 🚀 Deploy Allure Report to GitHub Pages
+        if: steps.check_report.outputs.exists == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _03Typescript_Playwright/allure-report
+          destination_dir: $(echo ${{ github.ref_name }} | sed 's/\//-/g')
+  
+      # - name: 🚀 Deploy Allure Report to GitHub Pages
+      #   if: success() && [ -d "_03Typescript_Playwright/allure-report" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]
+      #   uses: peaceiris/actions-gh-pages@v4
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: _03Typescript_Playwright/allure-report
+      #     destination_dir: ${{ github.ref_name // '/' / '-' }}
 
           ###################
 
