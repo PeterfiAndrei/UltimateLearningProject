@@ -1,0 +1,8 @@
+<suite name="Parallel Suite" parallel="classes" thread-count="3">
+    <test name="Test 1">
+        <classes>
+            <class name="_01AndreiPeterfi.tests.DemoGoogleTest" />
+            <class name="_01AndreiPeterfi.tests.DemoTheInternetTest" />
+        </classes>
+    </test>
+</suite>

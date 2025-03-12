@@ -1,0 +1,8 @@
+<suite name="ParallelTests" parallel="classes" thread-count="4">
+    <test name="Test">
+        <packages>
+            <!-- Include pachetul dorit -->
+            <package name="tests" />
+        </packages>
+    </test>
+</suite>

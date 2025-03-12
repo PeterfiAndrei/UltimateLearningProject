@@ -11,6 +11,7 @@
     <modules>
         <module>_01Java_Selenium</module>
         <module>_02Java_Cucumber</module>
+        <module>_06Java_TestNG</module>
     </modules>
 
     <properties>
