@@ -104,11 +104,11 @@ jobs:
 
       # ✅ DEBUG: Verifică dacă allure-results există
       - name: 🕵️ Check if allure-results exists
-        working-directory: ./_03Typescript_Playwright
+        working-directory: _03Typescript_Playwright
         run: ls -R allure-results || echo "⚠️ Folderul allure-results NU există!"
 
       - name: 📊 Install and Generate Allure Report
-        working-directory: ./_03Typescript_Playwright
+        working-directory: _03Typescript_Playwright
         run: |
           npm install -g allure-commandline@2.24.0
           mkdir -p allure-report
@@ -116,7 +116,7 @@ jobs:
 
       # ✅ DEBUG: Verifică dacă allure-report s-a generat corect
       - name: 🕵️ Debug Allure Report
-        working-directory: ./_03Typescript_Playwright
+        working-directory: _03Typescript_Playwright
         run: ls -R allure-report || echo "⚠️ Folderul allure-report este gol!"
 
       - name: 🕵️ Debug Paths Before Deploy
@@ -159,7 +159,7 @@ jobs:
           echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ github.run_id }}/"
 
 
-          # merge-reports:
+        # merge-reports:
   #   name: Merge-Reports
   #   if: success() || failure()
   #   needs: test
