@@ -117,13 +117,18 @@ jobs:
           repository: ${{ github.repository }}
           path: gh-pages
           ref: gh-pages
+      - name: 📝 Format Branch Name
+        id: format_branch_name
+        run: |
+          formatted_name=$(echo "${{ github.head_ref }}" | sed 's#refs/heads/##; s#refs/pull/##; s#/merge##; s#/#-#g')
+          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
 
       - name: ♻️ Copy Previous History (if exists)
         run: |
           BRANCH_NAME=${GITHUB_REF_NAME//\//-}
-          if [ -d "gh-pages/$BRANCH_NAME/history" ]; then
+          if [ -d "gh-pages/${{ env.formatted_name }}/history" ]; then
             mkdir -p _03Typescript_Playwright/allure-results/history
-            cp -r gh-pages/$BRANCH_NAME/history _03Typescript_Playwright/allure-results/
+            cp -r gh-pages/${{ env.formatted_name }}/history _03Typescript_Playwright/allure-results/
           fi
 
       - name: ✨ Generate Allure Report with History
@@ -132,11 +137,7 @@ jobs:
           mkdir -p allure-report
           allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
       
-      - name: 📝 Format Branch Name
-        id: format_branch_name
-        run: |
-          formatted_name=$(echo "${{ github.head_ref }}" | sed 's#refs/heads/##; s#refs/pull/##; s#/merge##; s#/#-#g')
-          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
+ 
               
       - name: ✅ Check if Allure Report Exists
         id: check_report
@@ -159,7 +160,7 @@ jobs:
 
       - name: 🔗 Print Allure Report URL
         run: |
-          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/ ${{ env.formatted_name }}"
+          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.formatted_name }}"
 
 
         # merge-reports:
