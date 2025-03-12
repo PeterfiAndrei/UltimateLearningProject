@@ -150,7 +150,7 @@ jobs:
 
 
       - name: 🚀 Deploy Allure Report to GitHub Pages
-        if: ${{ env.exists == 'true' }}
+        if: env.exists == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
