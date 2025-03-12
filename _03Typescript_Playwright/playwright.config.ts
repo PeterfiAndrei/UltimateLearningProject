@@ -7,33 +7,38 @@ export default defineConfig({
         timeout: 5000, // Timeout pentru `expect()`
     },
     workers: 4, // Playwright va folosi 4 procese în paralel
-    retries: 2, // Reîncearcă testele de max. 2 ori dacă eșuează
-    reporter: [['html', { open: 'never' }]], // Raport HTML standard
-    // reporter: [['allure-playwright']], // Integrare cu Allure (necesită instalare)
+    retries: 3, // Reîncearcă testele de max. 2 ori dacă eșuează
+    // reporter: [['html', { open: 'never' }]], // Raport HTML standard
+    reporter: [
+        ["list"],
+        ['allure-playwright'],
+        ['./reporters/flaky-reporter.js']
+    ],
 
     use: {
         testIdAttribute: 'id', // Definește atributul implicit pentru testare, se va folosi getByTestId pentru a cauta
-        headless: false, // Rulează testele fără UI (true) sau cu UI vizibil (false)
+        headless: process.env.CI ? true : false, // Rulează testele fără UI (true) sau cu UI vizibil (false)
         viewport: { width: 1280, height: 720 }, // Dimensiunea ferestrei browserului
         ignoreHTTPSErrors: true, // Ignoră erorile SSL
         trace: 'on-first-retry', // Salvează trace doar dacă testul eșuează prima dată
         screenshot: 'only-on-failure', // Fă capturi de ecran doar când un test eșuează
         video: 'retain-on-failure', // Înregistrează video doar dacă testul eșuează
-        baseURL: 'https://playwright.dev', // URL implicit pentru testele tale
+        baseURL: 'https://the-internet.herokuapp.com/secure', // URL implicit pentru testele tale
     },
     projects: [
         {
             name: 'chromium',
             use: { browserName: 'chromium' },
-        },
-        {
-            name: 'firefox',
-            use: { browserName: 'firefox' },
-        },
-        {
-            name: 'webkit',
-            use: { browserName: 'webkit' },
-        },
+        }
+        // ,
+        // {
+        //     name: 'firefox',
+        //     use: { browserName: 'firefox' },
+        // },
+        // {
+        //     name: 'webkit',
+        //     use: { browserName: 'webkit' },
+        // },
     ],
 
 });

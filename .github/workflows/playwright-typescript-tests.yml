@@ -1,0 +1,151 @@
+name: Playwright Browser Tests
+run-name: ${{ github.workflow }} @ ${{ github.ref_name }}
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  merge_group:
+    branches: [master]
+    types: [checks_requested]
+  workflow_dispatch:
+
+concurrency:
+  # Only cancel in-progress runs if the branches are other than master
+  # All commits pushed to master must be validated
+    group: ${{ github.workflow }}-${{ github.ref_name == 'master' && github.run_id || github.event.pull_request.number || github.ref_name }}
+    cancel-in-progress: true
+
+
+permissions:
+  contents: write
+
+jobs:
+  # build:
+    # not needed
+  test:
+    name: Test
+    # needs: build  # not needed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1]
+    env:
+      PLAYWRIGHT_SHARD: ${{ matrix.shard }}
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🗃️ Cache Maven and Yarn Artifacts
+        uses: actions/cache@v4
+        with:
+          key: build${{ hashFiles('yarn.lock', '_03Typescript_Playwright/yarn.lock')}}
+          restore-keys: |
+            build${{ hashFiles('yarn.lock', '_03Typescript_Playwright/yarn.lock')}}
+            build
+          path: |
+            ~/.m2/repository
+            ~/.cache
+            ~/.yarn
+
+      - name: 💾 Cache Node.js modules
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules
+            ~/.cache
+          key: node-modules-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            node-modules-
+    
+      - name: 💾 Cache Playwright Browsers
+        id: cache-browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers
+
+      - name: 🛠️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      
+      - name: 🛠️ Install Dependencies
+        run: yarn install
+
+      - name: 🛠️ Install Allure Playwright Reporter
+        working-directory: _03Typescript_Playwright
+        run: npm install --save-dev allure-playwright
+
+
+      - name: 🌐 Install Playwright Browsers
+        if: ${{ steps.cache-browsers.outputs.cache-hit != 'true' }}
+        run: npx playwright install
+
+      - name: 🛠️ Install Allure
+        run: npm install -g allure-commandline --save-dev
+
+      - name: ▶️ Run Playwright Tests
+        working-directory: _03Typescript_Playwright
+        run: npx playwright test --reporter=line,allure-playwright || echo "exit_code=$?" >> $GITHUB_ENV
+
+      - name: 📂 Download Previous Report from gh-pages
+        uses: actions/checkout@v4
+        if: ${{ github.event_name != 'push' }}
+        with:
+          repository: ${{ github.repository }}
+          path: gh-pages
+          ref: gh-pages
+
+      - name: 📝 Format Branch Name
+        id: format_branch_name
+        run: |
+          formatted_name=$(echo "${{ github.head_ref }}" | sed 's#refs/heads/##; s#refs/pull/##; s#/merge##; s#/#-#g')
+          echo "formatted_name=$formatted_name" >> $GITHUB_ENV
+
+      - name: ♻️ Copy Previous History (if exists)
+        run: |
+          BRANCH_NAME=${GITHUB_REF_NAME//\//-}
+          if [ -d "gh-pages/${{ env.formatted_name }}/history" ]; then
+            mkdir -p _03Typescript_Playwright/allure-results/history
+            cp -r gh-pages/${{ env.formatted_name }}/history _03Typescript_Playwright/allure-results/
+          fi
+
+      - name: ✨ Generate Allure Report with History
+        working-directory: _03Typescript_Playwright
+        run: |
+          mkdir -p allure-report
+          allure generate allure-results --clean -o allure-report || echo "⚠️ EROARE: Nu există fișiere în allure-results!"
+      
+      - name: ✅ Check if Allure Report Exists
+        id: check_report
+        run: |
+          if [ -d "_03Typescript_Playwright/allure-report" ] && [ "$(ls -A _03Typescript_Playwright/allure-report)" ]; then
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "exists=false" >> $GITHUB_ENV
+          fi
+
+      - name: 🚀 Deploy Allure Report to GitHub Pages
+        if: env.exists == 'true'
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _03Typescript_Playwright/allure-report
+          destination_dir: ${{ env.formatted_name }}
+
+      - name: 🧹 Clean Up
+        if: env.exists == 'true'
+        run: rm -rf _03Typescript_Playwright/allure-results
+        
+      - name: 🔗 Print Allure Report URL
+        if: env.exists == 'true'
+        run: |
+          echo "🔗 Allure Report: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.formatted_name }}"
+
+      - name: 🚩 Fail if Tests Failed
+        if: ${{ env.exit_code != '0' }}
+        run: exit 1

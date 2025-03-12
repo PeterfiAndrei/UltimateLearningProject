@@ -65,3 +65,16 @@
     });
 
 ```
+
+# 4. Install Allure Report locally:
+```shell
+  npm install --save-dev @playwright/test allure-playwright
+```
+```shell
+  npm install -g allure-commandline
+```
+
+# 5. Generate Allure report:
+```shell
+    npx allure generate allure-results --clean ; npx allure open
+```
