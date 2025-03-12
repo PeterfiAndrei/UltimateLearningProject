@@ -12,7 +12,7 @@ export default defineConfig({
     reporter: [
         ["line"],
         ['allure-playwright'],
-        ['./reporters/flaky-reporter.js']
+        ['_03Typescript_Playwright/reporters/flaky-reporter.js']
     ],
 
     use: {
