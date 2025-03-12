@@ -9,7 +9,11 @@ export default defineConfig({
     workers: 4, // Playwright va folosi 4 procese în paralel
     retries: 3, // Reîncearcă testele de max. 2 ori dacă eșuează
     // reporter: [['html', { open: 'never' }]], // Raport HTML standard
-    reporter: [["line"],['allure-playwright']],
+    reporter: [
+        ["line"],
+        ['allure-playwright'],
+        ['./reporters/flaky-reporter.js']
+    ],
 
     use: {
         testIdAttribute: 'id', // Definește atributul implicit pentru testare, se va folosi getByTestId pentru a cauta
