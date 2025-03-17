@@ -38,3 +38,30 @@ jobs:
 
       - name: Run ESLint
         run: npx eslint . --max-warnings=0
+
+  checkstyle:
+    name: Java Linter (Checkstyle)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'corretto' # java version
+          architecture: 'x64'
+
+      - name: Install dependencies
+        run: mvn install -DskipTests
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:checkstyle
+
+      - name: Upload Checkstyle results
+        uses: mikeal/publish-to-github-action@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          title: 'Checkstyle Results'
+          files: checkstyle-result.xml
